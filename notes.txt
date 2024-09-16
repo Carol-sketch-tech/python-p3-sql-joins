@@ -1,0 +1,104 @@
+Objectives 
+use primary and foreign keys to create relatiions in a relation database.
+Use INNER JOIN nad LEFT JOIN to retrieve relevant data for members of one table in toher tables.
+
+learn how to retrieve specific sets fo data from associated tables suign SQL join statements.
+
+WHAT IS A JOIN?
+A sql JOIN clause is a way to combine rows from two or moretables, based on a common clause between them.
+lets say that we have two tables a cats table and an owners table.
+cats aer associates by a foreign eky of the owner _id in the cats table.
+how would we creaft a query that would grab us all of the cats with a particular owner and even include the onformation about that owner in the data returned to us by that query.
+a SELECT statement that gets us all cats with a certain owner is as folows 
+     SELECT * FROM cats WHERE owner_id = 2;
+this would return the appropriate list of cats.
+but hwat is we want to qury botht he cats and the owners tables and returnt he information about botht cats and owners?
+THis is where we would use the JOIN statements.
+
+JOIN TYPES.
+there are two common types of Joins That we will cover in this lesson.
+the following JOIN keywoed will used along with SLECT statements to achieve the sedcirbed values.
+these are :
+        INNER JOIN -> INNER JOIN returns all rows where is at leaste one match in BOTH tables.
+        LEFT(OUTER) JOIN. -> Outer join return all rows from the left table and the matched rows from the right table.
+
+
+INNER JOIN.
+defination ->  AN INNER JOIN query will return all the rows from both tables you are querying where a certain conditon is met.
+in other words it woll select all rows from both tables as ling as there is a match between the specifieed columns of each table.
+
+Heres an example of an INNER JOIN statement 
+    SELECT column_names
+    FROM first_table
+    INNER JOIN second_table
+    ON first_table.column_name = second_table.columns_name;
+
+    example 
+        SELECT cats.name, cats.breed, owner.name
+        FROM cats
+        INNER JOIN owner
+        ON cats.owner_id = owner.id
+
+Breakign this statement down.
+    1. SELECT cats.name, cats.breed, owner.name -> here we are specifying with column from which table we want to select data from.
+    we use the table_name.column_namenotation to grab columns from two different tables.
+
+    2. we join out two tables together with out INNER JOIN keyword
+        FROM cats 
+        INNER JOIN owner
+    3. lastly we tell our query how to connect , or join the two tables.
+    we tll the query which columns in each table funciton as the foreign key/ primary key.
+    thourgh this our query will identify which cat belongs to which owner and return that information accordingly.
+        ON cats.owner_id = owners.id;
+    here we are telling our query that the owner_id column in the cats table is filled with data that corresponds to data in the id column of the owners table.
+    we are indicting that a calue of 1, for example in an individaul cats owner_id column refrs to the individual owner who has an id of 1.
+    and we are telling our queries to return only those cats and owners who share this connection.
+
+    when you look the output the owners table in names name just like the cats name table.
+    this ,ight cause confusion .
+    therefor to make a distinqtion we can change the name of the name column of the owners to another name.
+    the INNER JOIN statement will be as follows 
+            SELECT cats.name, cats.breed, owners.name AS "owner_name"
+            FROM cats
+            INNER JOIN owners
+            ON cats.owner_id = owner.id;
+note that when using an INNER JOIN to rturn data from mulitole tables, you will only see the results wfrom 
+records int he first table and the second table when they can be connecteed via a foreign key.that is when 
+our cats table has na owner_id that correspond with na id in the owners table.
+
+Note on INNER JOIN OR, wheres Lil Bub?
+When we say that an INNER JOIN returns all of the data for which a certain condition is true, we mean that nay data that does not 
+meet a join condition will not be rturned.
+the JOIN condition in this case is the thing that our two tables are JOINED ON.
+    ON cats.owner_id = owner.id // this is the JOIN condition.
+    
+Our query will therfore select all of the appropriate data concerinig cats and woners who are joined by an 
+owner_id/id foreign key/ primary key relationship.
+in toher words, it will select all of the cats who have a value in the 
+owner_id column that amtchet a value on int he Id column of the owners table.
+any cats that have an empty owners_id column or have a value that does not match any value in the owner. id column will not
+be returned.
+
+
+
+LEFT JOIN.
+this query reurns all rows deim the left or first table, regardless of whether or not they met the JOIN condition.
+the query will alsie return the matched data from the right or the second table.
+In this case data fromthe first table that doesnt meet our JOIN condition the resulting output will include NULL 
+or empty values for the mission matched columns.
+the folowing is howyou write a LEFT JOIN statement  
+    SELECT cats.name, cats.breed, owners.name
+    FROM cats
+    LEFT JOIN owners
+    ON cats.owners_id = owner.id;
+
+    Here you should see a rwo with a cat with no owner displayed, 
+
+In the left join ,all rows are returned regardless of wherther theres a foreighn keys match in the second table or not.
+we get all the data from the cats table and we get dat from the owners table when oue cats table has 
+an ownner_id that corresponds with an id in the owners table.
+
+ther are other JOIN clauses:
+    RIGHT JOIN 
+    FULL JOIN 
+    
